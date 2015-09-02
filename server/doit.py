@@ -14,17 +14,22 @@ class Doit(object):
 
 	def _read_config(self):
 
-		configer = Configer()
+		configer = Configer('../config.ini')
 		self.pipe_file = configer.get_configer('QUEUE','PIPE_FILE')
 	
 	def write(self,data):
 
-		data = "write('" + data + "')"
+		data = "write(" + data + ")"
 		os.write(self.pipe_fd,data)
 
 	def transcode(self,filepath):
 		
-		data = "transcode('" + filepath + "')"
+		data = "transcode(" + filepath + ")"
+		os.write(self.pipe_fd,data)
+
+	def kill(self):
+		
+		data = "kill()"
 		os.write(self.pipe_fd,data)
 
 	def __del__(self):
@@ -32,10 +37,11 @@ class Doit(object):
 		os.close(self.pipe_fd)
 
 if __name__ == '__main__':
+	#do = Doit()
+	#do.transcode('/home/work/mmpeg/fjdslfjdsf.mp4')
 	do = Doit()
-	do.transcode('/home/work/mmpeg/fjdslfjdsf.mp4')
-	do = Doit()
-	do.transcode('/home/work/mmpeg/fjdslfjdsf.mp4')
+	do.kill()
+	#do.transcode('/home/work/mmpeg/fjdslfjdsf.mp4')
 	#do.transcode('/home/work/mmpeg/fjdslfjdsf.mp4')
 	#do.transcode('/home/work/mmpeg/fjdslfjdsf.mp4')
 	#do.transcode('/home/work/mmpeg/fjdslfjdsf.mp4')
